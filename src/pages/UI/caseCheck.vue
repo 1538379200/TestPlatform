@@ -1,7 +1,6 @@
 <script setup>
-import { Blind } from '@vicons/fa'
-import { NDataTable, NTag, NButton, NInput, NAlert, NPopselect } from 'naive-ui'
-import { h, readonly, ref,onMounted} from 'vue'
+import { NDataTable, NButton, NDrawer,NDrawerContent,NInputGroup,NInput,NInputGroupLabel,NSpace} from 'naive-ui'
+import { h, ref,onMounted} from 'vue'
 
 /* 创建数据表结构,传入一个函数给按钮使用，此函数定义的方法在下方定义 */
 const createCol = ({ caseEdit }) => {
@@ -10,15 +9,15 @@ const createCol = ({ caseEdit }) => {
             title: '用例编号',
             key: 'caseID',
             align: 'center',
-            render(row) {
-                return h(
-                    'p',
-                    {   
-                        value: row.caseID,
-                    },
-                    { default: () => row.caseID }
-                )
-            }
+            // render(row) {
+            //     return h(
+            //         'p',
+            //         {   
+            //             value: row.caseID,
+            //         },
+            //         { default: () => row.caseID }
+            //     )
+            // }
 
         },
         {
@@ -29,11 +28,11 @@ const createCol = ({ caseEdit }) => {
                 return h(
                     'p',
                     {   id:'casetype',
-                        value: row.caseType,
+                        // value: row.caseType,
                         contenteditable: true,
-                        onClick:()=>{
-                            row.caseType=document.getElementById('casetype').innerText
-                        }
+                        // onClick:()=>{
+                        //     row.caseType=rowsAttr.text
+                        // }
                     },
                     { default: () => row.caseType }
                 )
@@ -61,7 +60,7 @@ const createCol = ({ caseEdit }) => {
                         */
                         onClick: () => caseEdit(row)
                     },
-                    { default: () => '提交修改' }
+                    { default: () => '编辑' }
                 )
             },
         }
@@ -70,7 +69,7 @@ const createCol = ({ caseEdit }) => {
 
 const rowsAttr = ref(null)
 onMounted(() => {
-    console.log(rowsAttr.value.data)
+    console.log(window.getSelection().toString)
 });
 
 /* 创建表格数据 */
@@ -113,10 +112,18 @@ for (var item of mydata){
 }
 
 
-/* 定义行的数据填入的函数，函数是点击按钮的回调 */
-const columns = createCol({
+/* 定义行的数据填入的函数，函数是点击按钮的回调,点击弹出修改窗口 */
+const active = ref(false)
+const placement = ref('top')
+let EditcaseID = ref('')
+let EditcaseType = ref('')
+let EditcaseData = ref('')
+let columns = createCol({
     caseEdit(rowData) {
-        alert(rowData.caseType)
+        active.value = true,
+        EditcaseID.value = String(rowData.caseID),
+        EditcaseType.value = String(rowData.caseType),
+        EditcaseData.value = String(rowData.caseData)
     },
 })
 
@@ -135,6 +142,8 @@ const pagination = { pageSze: 10 }
 
 /* 提交表数据 */
 // const data = ref(createData())
+
+/* 修改用例数据弹窗界面代码 */
 </script>
 
 <template>
@@ -149,6 +158,26 @@ const pagination = { pageSze: 10 }
             :row-class-name="rowClassName"
         />
     </div>
+    <n-drawer v-model:show="active" :width="502" :placement="placement" :native-scrollbar=false height="300">
+        <n-drawer-content style="padding-top: 10px;">
+            <template #header>用例修改</template>
+            <n-input-group>
+                <n-input-group-label :style="{width: '10%'}" style="text-align: center;">用例编号</n-input-group-label>
+                <n-input :default-value="EditcaseID" clearable disabled></n-input>
+            </n-input-group>
+            <n-input-group>
+                <n-input-group-label :style="{width: '10%'}" style="text-align: center;">操作类型</n-input-group-label>
+                <n-input :default-value="EditcaseType" clearable></n-input>
+            </n-input-group>
+            <n-input-group>
+                <n-input-group-label :style="{width: '10%'}" style="text-align: center;">用例数据</n-input-group-label>
+                <n-input :default-value="EditcaseData" clearable></n-input>
+            </n-input-group>
+            <template #footer>
+                <n-button type="primary" style="display: block;">提交修改</n-button>
+            </template>
+        </n-drawer-content>
+    </n-drawer>
 </template>
 
 <style scoped>
@@ -160,5 +189,8 @@ const pagination = { pageSze: 10 }
 }
 :deep(td) {
     font-weight: bold;
+}
+.n-input-group{
+    padding-top: 10px;
 }
 </style>
