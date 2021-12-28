@@ -1,0 +1,54 @@
+
+/* 从下往上滑动进入的动画 */
+@keyframes anim-up {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.anim-up {
+    animation-duration: 500ms;
+    animation-timing-function: ease;
+    animation-name: anim-up;
+}
+
+/* 从右到左滑动进入的动画 */
+@keyframes anim-left {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
+.anim-left{
+    animation-name: anim-left;
+    animation-duration: 500ms;
+    animation-timing-function: ease;
+}
+
+/* 设置一个鼠标悬浮放大的特效 */
+.anim-scale:hover{
+    transform: scale(1.1);
+    transition-duration: 300ms;
+}
+
+/* 定义一个延迟上滑进入的动画 */
+@keyframes anim-up-delay {
+    0%{
+        transform: translateY(100%);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+.anim-up-delay{
+    animation-name: anim-up-delay;
+    animation-duration: 500ms;
+    animation-timing-function: ease;
+    animation-delay: 500ms;
+    animation-fill-mode: forwards;
+}
+
