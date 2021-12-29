@@ -67,11 +67,6 @@ const createCol = ({ caseEdit }) => {
     ]
 }
 
-const rowsAttr = ref(null)
-onMounted(() => {
-    console.log(window.getSelection().toString)
-});
-
 /* 创建表格数据 */
 // const createData = (row)=>[
 //     {
@@ -112,7 +107,7 @@ for (var item of mydata){
 }
 
 
-/* 定义行的数据填入的函数，函数是点击按钮的回调,点击弹出修改窗口 */
+/* 定义行的数据填入的函数，函数是点击按钮的回调,点击弹出修改窗口，将行数据带出 */
 const active = ref(false)
 const placement = ref('top')
 let EditcaseID = ref('')
@@ -143,14 +138,16 @@ const pagination = { pageSze: 10 }
 /* 提交表数据 */
 // const data = ref(createData())
 
-/* 修改用例数据弹窗界面代码 */
+//获取drawer抽屉的输入值，供后续数据传递
+const drawerValue = ref(null)
+onMounted(() => {
+    console.dir(drawerValue.value)
+});
 </script>
 
 <template>
     <div class="anim-left">
         <n-data-table
-            id="caseCheckTable"
-            ref="rowsAttr"
             :columns="columns"
             :data="data"
             :pagination="pagination"
@@ -158,7 +155,7 @@ const pagination = { pageSze: 10 }
             :row-class-name="rowClassName"
         />
     </div>
-    <n-drawer v-model:show="active" :width="502" :placement="placement" :native-scrollbar=false height="300">
+    <n-drawer v-model:show="active" :width="502" :placement="placement" :native-scrollbar=false height="300" ref="drawerValue">
         <n-drawer-content style="padding-top: 10px;">
             <template #header>用例修改</template>
             <n-input-group>
@@ -174,7 +171,7 @@ const pagination = { pageSze: 10 }
                 <n-input :default-value="EditcaseData" clearable></n-input>
             </n-input-group>
             <template #footer>
-                <n-button type="primary" style="display: block;">提交修改</n-button>
+                <n-button type="primary">提交修改</n-button>
             </template>
         </n-drawer-content>
     </n-drawer>
