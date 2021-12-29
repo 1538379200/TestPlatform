@@ -33,8 +33,8 @@ const gocaseCheck = ()=>{
             </n-gi>
         </n-grid>
         <template #extra>
-            <n-button @click="gocaseupload">上传用例</n-button>
-            <n-button @click="gocaseCheck">前往测试</n-button>
+            <n-button @click="gocaseupload" type="success" secondary strong>上传用例</n-button>
+            <n-button @click="gocaseCheck" type="success" secondary strong>前往测试</n-button>
         </template>
     </n-page-header>
 </template>

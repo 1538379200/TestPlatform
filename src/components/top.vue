@@ -103,7 +103,7 @@ const options = [
             <n-menu :options="posttest" mode="horizontal" v-model:value="activeKey"></n-menu>
         </n-gi>
         <n-gi :offset="3" :span="2" class="light-green">
-            <n-button type="primary" size="medium" @click="">
+            <n-button type="primary" size="medium">
             <Icon><CloudDownloadSharp></CloudDownloadSharp></Icon>
             下载测试模版
             </n-button>
