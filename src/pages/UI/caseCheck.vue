@@ -1,10 +1,10 @@
 <script setup>
-import { NDataTable, NButton, NDrawer,NDrawerContent,NInputGroup,NInput,NInputGroupLabel,NSpace,NSelect,NGrid,NGi} from 'naive-ui'
-import loading from 'naive-ui/lib/_internal/loading'
-import { h, ref,onMounted} from 'vue'
+import { NDataTable, NButton, NDrawer,NDrawerContent,NInputGroup,NInput,NInputGroupLabel,NSpace,NSelect,NGrid,NGi,NAlert} from 'naive-ui'
+import { h, ref,onMounted,toRaw,markRaw,onBeforeMount,watchEffect,watch} from 'vue'
 import {Icon} from '@vicons/utils'
 import {CalligraphyPenCheckmark20Filled} from '@vicons/fluent'
 import {ArrowCircleUp,Kickstarter} from '@vicons/fa'
+import {useRoute, useRouter} from 'vue-router'
 
 /* 创建数据表结构,传入一个函数给按钮使用，此函数定义的方法在下方定义 */
 const createCol = ({ caseEdit }) => {
@@ -109,14 +109,14 @@ for (var item of mydata){
 /* 定义行的数据填入的函数，函数是点击按钮的回调,点击弹出修改窗口，将行数据带出 */
 const active = ref(false)
 const placement = ref('top')
-let EditcaseID = ref('')
-let EditcaseType = ref('')
-let EditcaseData = ref('')
+let EditcaseID = ref(null)
+let EditcaseType = ref(null)
+let EditcaseData = ref(null)
 let columns = createCol({
     caseEdit(rowData) {
         active.value = true,
         EditcaseID.value = String(rowData.caseID),
-        EditcaseType.value = String(rowData.caseType),
+        EditcaseType.value =String(rowData.caseType),
         EditcaseData.value = String(rowData.caseData)
     },
 })
@@ -143,10 +143,24 @@ const drawerValue = ref(null)
 const valueID = ref(EditcaseID)
 const valueType = ref(EditcaseType)
 const valueData = ref(EditcaseData)
+const alerEditShow = ref(false)
+const tableValue = ref(null)
+
+const alerEditClose = ()=>{
+    alerEditShow.value=false
+}
+
 const commitEdit = ()=>{
-    console.log(valueID.value)
-    console.log(valueType.value)
-    console.log(valueData.value)
+    watch([valueType,valueData],(a,b)=>{
+        console.log('被修改了',a,b)
+    })
+    if (valueID.value===EditcaseID.value&&valueType.value===EditcaseType.value&&valueData.value===EditcaseData.value){
+        alerEditShow.value=true
+    }else{
+        console.log(valueID.value)
+        console.log(valueType.value)
+        console.log(valueData.value)
+    }
 }
 //更改抽屉头部样式
 const drawerHeaderStyle = {
@@ -168,9 +182,14 @@ const options = ref([
         value:'options-2',
     }
 ])
+//增加用例未选择的弹窗提示，具体弹窗定义在下面“开始测试”按钮定义块中
 const selectValue = ref(null)
 const checkBtn = ()=>{
-    console.log(selectValue.value)
+    if (selectValue.value){
+        console.log(selectValue.value)
+    }else{
+        alerShow.value=true
+    }
 }
 const gridStyle = {
     'padding':'0 0 3rem 0',
@@ -186,9 +205,31 @@ const startTestBtn = {
     right: 0,
 }
 
+//点击开始测试按钮的回调事件
+//判断没有选择用例时不跳转进行弹窗提示
+//v-if绑定弹窗显示
+//弹窗直接关闭只能触发一次，所以关闭弹窗给一个回调函数，重新设置aler的属性为false
+const $router = useRouter()
+const alerShow = ref(false)
+const alerClose = ()=>{
+    alerShow.value=false
+}
+const startTest = ()=>{
+    if (selectValue.value){
+        $router.push({
+            name:'testPage',
+            params:{
+                caseFile:selectValue.value
+            }
+        })
+    }else{
+        alerShow.value = true
+    }
+}
 </script>
 
 <template>
+    <n-alert title="提示" type="error" v-if="alerShow" closable show-icon :on-close="alerClose">您还没有选择用例文件！</n-alert>
     <n-grid x-gap="12" y-gap="10" :cols="4" :style="gridStyle">
         <n-gi :span="3">
         <n-select
@@ -211,6 +252,7 @@ const startTestBtn = {
     </n-grid>
     <div class="anim-left">
         <n-data-table
+            ref="tableValue"
             striped
             :columns="columns"
             :data="data"
@@ -220,7 +262,7 @@ const startTestBtn = {
             :min-height="400"
         />
     </div>
-    <n-button :block=true type="primary" :style="startTestBtn">
+    <n-button :block=true type="primary" :style="startTestBtn" @click="startTest">
         <Icon size="20" style="padding: 0 5px 0 0">
             <Kickstarter></Kickstarter>
         </Icon>
@@ -229,17 +271,18 @@ const startTestBtn = {
     <n-drawer v-model:show="active" :width="502" :placement="placement" :native-scrollbar=false height="300">
         <n-drawer-content style="padding-top: 10px;" :header-style="drawerHeaderStyle">
             <template #header>用例修改</template>
+            <n-alert title="提示" type="error" v-if="alerEditShow" closable show-icon :on-close="alerEditClose">您没有进行修改，不需要提交！</n-alert>
             <n-input-group>
                 <n-input-group-label :style="{width: '10%'}" style="text-align: center;">用例编号</n-input-group-label>
-                <n-input :default-value="EditcaseID" clearable disabled ref="drawerValue" v-model:value="valueID"></n-input>
+                <n-input clearable disabled ref="drawerValue" v-model:value="valueID"></n-input>
             </n-input-group>
             <n-input-group>
                 <n-input-group-label :style="{width: '10%'}" style="text-align: center;">操作类型</n-input-group-label>
-                <n-input :default-value="EditcaseType" clearable v-model:value="valueType"></n-input>
+                <n-input clearable v-model:value="valueType"></n-input>
             </n-input-group>
             <n-input-group>
                 <n-input-group-label :style="{width: '10%'}" style="text-align: center;">用例数据</n-input-group-label>
-                <n-input :default-value="EditcaseData" clearable v-model:value="valueData"></n-input>
+                <n-input clearable v-model:value="valueData"></n-input>
             </n-input-group>
             <template #footer>
                 <n-button type="primary" @click="commitEdit" :block=true>

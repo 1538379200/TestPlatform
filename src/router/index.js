@@ -4,6 +4,7 @@ const porttest = ()=> import('../pages/Post/porttest.vue')
 const indexpage = ()=> import('../pages/index.vue')
 const caseupload = ()=>import('../pages/UI/caseupload.vue')
 const caseCheck = ()=>import('../pages/UI/caseCheck.vue')
+const testPage = ()=>import('../pages/UI/testPage.vue')
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
         name:'caseCheck',
         path:'/caseCheck',
         component:caseCheck,
+    },
+    {
+        name:'testPage',
+        path:'/test',
+        component:testPage,
     },
 ]
 
