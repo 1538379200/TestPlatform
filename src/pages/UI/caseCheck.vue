@@ -48,7 +48,7 @@ const createCol = ({ caseEdit }) => {
                         */
                         onClick: () => caseEdit(row)
                     },
-                    { default: () => '编辑' }
+                    { default: () => '编个辑' }
                 )
             },
         }
@@ -145,21 +145,21 @@ const valueType = ref(EditcaseType)
 const valueData = ref(EditcaseData)
 const alerEditShow = ref(false)
 const tableValue = ref(null)
-
 const alerEditClose = ()=>{
     alerEditShow.value=false
 }
-
+//使用watch监听，如果用例值被修改，则走流程，没有修改则给出弹窗
+const valueStatus = ref(false)
 const commitEdit = ()=>{
     watch([valueType,valueData],(a,b)=>{
-        console.log('被修改了',a,b)
+        valueStatus.value = true
     })
-    if (valueID.value===EditcaseID.value&&valueType.value===EditcaseType.value&&valueData.value===EditcaseData.value){
-        alerEditShow.value=true
-    }else{
+    if (valueStatus.value){
         console.log(valueID.value)
         console.log(valueType.value)
         console.log(valueData.value)
+    }else{
+        alerEditShow.value=true
     }
 }
 //更改抽屉头部样式
@@ -229,7 +229,7 @@ const startTest = ()=>{
 </script>
 
 <template>
-    <n-alert title="提示" type="error" v-if="alerShow" closable show-icon :on-close="alerClose">您还没有选择用例文件！</n-alert>
+    <n-alert title="提示" type="error" v-if="alerShow" closable show-icon :on-close="alerClose">敲头！文件都不选，我怎么给你提交测试</n-alert>
     <n-grid x-gap="12" y-gap="10" :cols="4" :style="gridStyle">
         <n-gi :span="3">
         <n-select
@@ -271,7 +271,7 @@ const startTest = ()=>{
     <n-drawer v-model:show="active" :width="502" :placement="placement" :native-scrollbar=false height="300">
         <n-drawer-content style="padding-top: 10px;" :header-style="drawerHeaderStyle">
             <template #header>用例修改</template>
-            <n-alert title="提示" type="error" v-if="alerEditShow" closable show-icon :on-close="alerEditClose">您没有进行修改，不需要提交！</n-alert>
+            <n-alert title="提示" type="error" v-if="alerEditShow" closable show-icon :on-close="alerEditClose">敲膝盖！都不修改就提交</n-alert>
             <n-input-group>
                 <n-input-group-label :style="{width: '10%'}" style="text-align: center;">用例编号</n-input-group-label>
                 <n-input clearable disabled ref="drawerValue" v-model:value="valueID"></n-input>
