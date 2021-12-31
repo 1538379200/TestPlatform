@@ -7,4 +7,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
 
 # 前端框架
-使用vue+naiveui
+- js框架：vue
+- 相关生态：vuex、vue-router
+- 后端变成语言及框架：python-django
+

@@ -20,6 +20,7 @@
       <n-gi :span="1">
         <n-steps size="medium" vertical v-for="(item,index) in stepValues" :key="index">
           <n-step :title=item.title :description=item.description :status=item.stepStatus @click="showModal = true"></n-step>
+          <Dialog :headerValue="headerValue" :contentValue="contentValue" :dialogStatus="showModal"></Dialog>
           <template #error-icon>
             <n-icon>
               <sad-cry></sad-cry>
@@ -39,6 +40,7 @@ import {useRoute} from 'vue-router'
 import {ref} from 'vue'
 import {NAlert, NProgress, NTag, NSteps, NStep, NGrid, NGi,NIcon,NModal,NPopover} from 'naive-ui'
 import {SadCry} from '@vicons/fa'
+import Dialog from '../../components/Dialog.vue'
 
 const $route = useRoute()
 
@@ -67,6 +69,8 @@ const stepValues = [
 
 //定义错误类型可以弹窗显示错误日志
 const showModal = ref(false)
+const headerValue = ref('头部')
+const contentValue = ref('主题信息')
 </script>
 
 <style scoped>
