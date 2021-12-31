@@ -9,5 +9,5 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 # 前端框架
 - js框架：vue
 - 相关生态：vuex、vue-router
-- 后端变成语言及框架：python-django
+- 后端编程语言及框架：python-django
 
