@@ -35,8 +35,8 @@ onMounted(()=>{
                 type: 'pie',
                 radius: '50%',
                 data: [
-                    { value: props.passcase, name: '失败用例' },
-                    { value: props.failcase, name: '通过用例'},
+                    { value: props.failcase, name: '失败用例' },
+                    { value: props.passcase, name: '通过用例'},
                 ],
                 emphasis: {
                     itemStyle: {
@@ -53,5 +53,5 @@ onMounted(()=>{
 </script>
 
 <template>
-    <div id="pageCharts" style="width: 600px;height: 600px;"></div>
+    <div id="pageCharts" style="width: 500px;height: 500px;"></div>
 </template>

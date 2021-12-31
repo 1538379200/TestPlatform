@@ -52,3 +52,21 @@
     animation-fill-mode: forwards;
 }
 
+/*定义vue的进入和离开的动画效果*/
+@keyframes anim-inout {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
+.anim-inout-enter-active{
+    animation-name: anim-inout;
+    animation-duration: 500ms;
+    animation-timing-function: ease;
+}
+.anim-inout-leave-active{
+    animation-name: anim-inout;
+    animation-direction: reverse;
+}

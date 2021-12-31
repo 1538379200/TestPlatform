@@ -93,7 +93,7 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div id="echartsgauge" style="width: 600px;height: 600px;"></div>
+    <div id="echartsgauge" style="width: 500px;height: 500px;"></div>
 </template>
 <style scoped>
 </style>

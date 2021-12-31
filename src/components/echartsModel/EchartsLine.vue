@@ -1,6 +1,7 @@
 <script setup>
 import * as echarts from 'echarts'
 import { onMounted } from 'vue';
+
 onMounted(() => {
     const linecharts = echarts.init(document.getElementById("echartsline"));
     const option = {
