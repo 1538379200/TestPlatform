@@ -1,9 +1,9 @@
 <template>
-  <n-alert closable type="info" title="炒鸡温柔的提示" v-if="tipShow" show-icon :on-after-leave="tipOut">你以为刷新界面我就会重新运行？
+  <n-alert closable type="info" title="炒鸡温柔的提示" v-if="tipShow" show-icon>你以为刷新界面我就会重新运行？
   </n-alert>
   <div>
     <!--    <h2>{{ $route.params.caseFile }}</h2>-->
-    <transition name="animTrans" :appear="true">
+    <transition name="anim-inout" :appear="true">
       <n-progress
           v-if="runStatus"
           type="line"
@@ -18,7 +18,7 @@
           {{ persentNum }}%
         </n-tag>
       </n-progress>
-      <n-grid x-gap="12" cols="2" v-else>
+      <n-grid x-gap="12" cols="2" v-else style="align-items: center;justify-items: center">
         <n-gi :span="1">
           <EchartsPie :passcase="Passcase" :failcase="Failcase"></EchartsPie>
         </n-gi>
@@ -28,7 +28,7 @@
       </n-grid>
     </transition>
     <n-divider/>
-    <n-grid x-gap="12" :cols="2" style="padding: 5rem 2rem 0 2rem">
+    <n-grid x-gap="12" :cols="2" style="padding-top: 1rem;padding-right: 2rem;padding-left: 2rem">
       <n-gi :span="1">
         <n-steps size="medium" vertical v-for="(item,index) in stepValues" :key="index">
           <n-step :title=item.title :description=item.description :status=item.stepStatus></n-step>
@@ -40,8 +40,8 @@
           </template>
         </n-steps>
       </n-gi>
-      <n-gi :span="1" style="background-color: skyblue">
-        <div>占位</div>
+      <n-gi :span="1" style="padding-right: 2rem">
+        <data-table-model></data-table-model>
       </n-gi>
     </n-grid>
   </div>
@@ -54,14 +54,14 @@ import {NAlert, NProgress, NTag, NSteps, NStep, NGrid, NGi, NIcon, NDivider} fro
 import {SadCry} from '@vicons/fa'
 import EchartsPie from '../../components/echartsModel/EchartsPie.vue'
 import EchartsGaugeSpeed from '../../components/echartsModel/EchartsGaugeSpeed.vue'
+import DataTableModel from "../../components/dataTableModel.vue"
+
 
 const $route = useRoute()
 
 //判断是否有caseFile的文件，没有则不去执行代码
+//关闭弹窗提示后直接跳回页面
 const tipShow = ref(false)
-const tipOut = () => {
-  window.history.back()
-}
 if ($route.params.caseFile) {
   console.log($route.params.caseFile)
 } else {
@@ -97,26 +97,6 @@ const runStatus = ref(false)
 </script>
 
 <style scoped>
-@keyframes animTrans {
-  0%{
-    transform: translateX(100%);
-  }
-  100%{
-    transform: translateX(0%);
-  }
-}
-.animTrans-enter-active{
-  animation-name: animTrans;
-  animation-duration: 500ms;
-  animation-timing-function: ease;
-}
-.animTrans-leave-active{
-  animation-name: animTrans;
-  animation-duration: 500ms;
-  animation-direction: reverse;
-  animation-timing-function: ease;
-}
-.animTrans-enter-from{
+@import "../../static/animation.css";
 
-}
 </style>
