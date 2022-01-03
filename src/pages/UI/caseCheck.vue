@@ -7,7 +7,6 @@ import {
   NInputGroup,
   NInput,
   NInputGroupLabel,
-  NSpace,
   NSelect,
   NGrid,
   NGi,
@@ -163,7 +162,7 @@ const tableValue = ref(null)
 const alerEditClose = () => {
   alerEditShow.value = false
 }
-onMounted((e)=>{
+onMounted(()=>{
   console.log(drawerValue.value)
 })
 //使用watch监听，如果用例值被修改，则走流程，没有修改则给出弹窗
@@ -336,7 +335,7 @@ const startTest = () => {
   font-weight: bold;
 }
 
-.n-input-group {
-  padding-top: 10px;
+:deep(.n-input-group){
+  padding-top: 0.5rem;
 }
 </style>

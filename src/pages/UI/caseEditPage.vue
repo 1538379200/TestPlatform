@@ -56,7 +56,7 @@ const EcaseData = ref(null)
 const EcaseModel = ref(null)
 //设置只有操作类型为input时才可以输入数据，使用watch监听操作类型变化
 const inputDisable = ref(true)
-watch((EcaseType),(a,b)=>{
+watch((EcaseType),()=>{
   inputDisable.value = EcaseType.value !== 'input'
 })
 //定义select选择器的值

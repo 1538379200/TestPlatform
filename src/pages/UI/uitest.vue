@@ -1,9 +1,9 @@
 <script setup>
-import { ref,reactive } from 'vue';
-import { NGrid, NGridItem, NGi, NDivider,NTable, NTd,NTr,} from 'naive-ui'
+import { ref} from 'vue';
+import { NGrid, NGi, NDivider,NTable, NTd,NTr,} from 'naive-ui'
 import EchartsGaugeVue from '../../components/echartsModel/EchartsGauge.vue';
-import PageHeader from "../../components/pageHeader";
-import EchartsPie from "../../components/echartsModel/EchartsPie";
+import PageHeader from "../../components/pageHeader.vue";
+import EchartsPie from "../../components/echartsModel/EchartsPie.vue";
 const passcase = ref(400)
 const failcase = ref(600)
 const passed = ref(0.6)
@@ -47,9 +47,8 @@ const passed = ref(0.6)
 </template>
 <style scoped>
 @import '../../static/animation.css';
-.n-gi,
-.n-grid {
-    margin: auto;
+:deep(.n-gi,.n-grid){
+  margin: auto;
 }
 .pageheader {
     text-align: center;

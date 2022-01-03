@@ -1,4 +1,4 @@
-import {createRouter,createWebHashHistory,RouterLink,RouterView} from 'vue-router'
+import {createRouter,createWebHashHistory} from 'vue-router'
 const uitest = ()=> import('../pages/UI/uitest.vue')
 const porttest = ()=> import('../pages/Post/porttest.vue')
 const indexpage = ()=> import('../pages/index.vue')

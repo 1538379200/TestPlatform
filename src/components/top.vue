@@ -137,15 +137,8 @@ const options = [
 } */
 @import '../static/animation.css';
 
-.n-grid {
-  line-height: 50px;
-}
-
 div {
   height: 100%;
 }
 
-.center_row {
-  text-align: center;
-}
 </style>

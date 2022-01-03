@@ -1,6 +1,6 @@
 <script setup>
-import {NPageHeader, NGi, NGrid, NStatistic, NButton, NDropdown, NSpace} from 'naive-ui'
-import {RouterLink, useRoute, useRouter} from 'vue-router'
+import {NPageHeader, NGi, NGrid, NStatistic, NButton,} from 'naive-ui'
+import {useRouter} from 'vue-router'
 
 const $router = useRouter()
 const gocaseupload = () => {
