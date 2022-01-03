@@ -32,7 +32,7 @@
 /* 设置一个鼠标悬浮放大的特效 */
 .anim-scale:hover{
     transform: scale(1.1);
-    transition-duration: 300ms;
+    transition-duration: 150ms;
 }
 
 /* 定义一个延迟上滑进入的动画 */
@@ -69,4 +69,7 @@
 .anim-inout-leave-active{
     animation-name: anim-inout;
     animation-direction: reverse;
+    animation-duration: 500ms;
 }
+
+/*定义vue进入离开放大消失的效果*/

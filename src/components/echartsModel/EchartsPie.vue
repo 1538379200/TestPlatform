@@ -53,5 +53,5 @@ onMounted(()=>{
 </script>
 
 <template>
-    <div id="pageCharts" style="width: 500px;height: 500px;"></div>
+    <div id="pageCharts" style="width: 31.25rem;height: 31.25rem"></div>
 </template>

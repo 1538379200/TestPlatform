@@ -5,6 +5,7 @@ const indexpage = ()=> import('../pages/index.vue')
 const caseupload = ()=>import('../pages/UI/caseupload.vue')
 const caseCheck = ()=>import('../pages/UI/caseCheck.vue')
 const testPage = ()=>import('../pages/UI/testPage.vue')
+const caseEdit = ()=>import('../pages/UI/caseEditPage.vue')
 
 const routes = [
     {
@@ -35,6 +36,11 @@ const routes = [
         name:'testPage',
         path:'/test',
         component:testPage,
+    },
+    {
+        name:'caseEdit',
+        path:'/caseEdit',
+        component:caseEdit,
     },
 ]
 

@@ -1,6 +1,11 @@
 <script setup>
 import * as echarts from 'echarts'
 import { onMounted } from 'vue'
+const props = defineProps({
+  passed:{
+    type:Number
+  }
+})
 onMounted(() => {
     const echartsgauge = echarts.init(document.getElementById('echartsgauge'));
     const option = {
@@ -69,10 +74,10 @@ onMounted(() => {
                 },
                 title: {
                     offsetCenter: [0, '-20%'],
-                    fontSize: 30
+                    fontSize: 20
                 },
                 detail: {
-                    fontSize: 50,
+                    fontSize: 30,
                     offsetCenter: [0, '0%'],
                     valueAnimation: true,
                     formatter: function (value) {
@@ -82,7 +87,7 @@ onMounted(() => {
                 },
                 data: [
                     {
-                        value: 0.8,
+                        value: props.passed,
                         name: '用例及格率'
                     }
                 ]
@@ -93,7 +98,7 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div id="echartsgauge" style="width: 500px;height: 500px;"></div>
+    <div id="echartsgauge" style="width: 31.25rem;height: 31.25rem"></div>
 </template>
 <style scoped>
 </style>

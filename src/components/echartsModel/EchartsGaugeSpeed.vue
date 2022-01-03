@@ -1,5 +1,5 @@
 <template>
-  <div id="echartsguageSpeed" style="width: 500px;height: 500px"></div>
+  <div id="echartsguageSpeed" style="width: 31.25rem;height: 31.25rem"></div>
 </template>
 
 <script setup>
@@ -43,7 +43,7 @@ onMounted(()=>{
         axisLabel: {
           distance: 25,
           color: '#999',
-          fontSize: 20
+          fontSize: 25
         },
         anchor: {
           show: true,
@@ -58,7 +58,7 @@ onMounted(()=>{
         },
         detail: {
           valueAnimation: true,
-          fontSize: 80,
+          fontSize: 50,
           offsetCenter: [0, '70%']
         },
         data: [

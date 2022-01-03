@@ -1,28 +1,26 @@
 <script setup>
 import { ref,reactive } from 'vue';
-import echartsPieVue from '../../components/echartsModel/EchartsPie.vue';
-import EchartsLine from '../../components/echartsModel/EchartsLine.vue';
 import { NGrid, NGridItem, NGi, NDivider,NTable, NTd,NTr,} from 'naive-ui'
-import pageHeaderVue from '../../components/pageHeader.vue';
 import EchartsGaugeVue from '../../components/echartsModel/EchartsGauge.vue';
-// import SvgIconsVue from '../../components/SvgIcons.vue';
-// import SvgIconVue from '../../components/SvgIcon.vue';
+import PageHeader from "../../components/pageHeader";
+import EchartsPie from "../../components/echartsModel/EchartsPie";
 const passcase = ref(400)
 const failcase = ref(600)
+const passed = ref(0.6)
 </script>
 <template>
     <!-- <echarts-pie-vue :passcase='passcase' :failcase='failcase'></echarts-pie-vue> -->
     <!-- <echarts-line></echarts-line> -->
     <div class="anim-left" style="padding: 0 40px 0 40px;">
         <div class="pageheader">
-            <page-header-vue></page-header-vue>
+            <page-header></page-header>
         </div>
             <n-divider></n-divider>
             <router-view style="text-align: center;"></router-view>
             <n-grid x-gap="12" :cols="5">
                 <n-gi :span="2">
-                    <echarts-pie-vue :passcase="passcase" :failcase="failcase"></echarts-pie-vue>
-                    <echarts-gauge-vue></echarts-gauge-vue>
+                  <echarts-pie :passcase="passcase" :failcase="failcase"></echarts-pie>>
+                    <echarts-gauge-vue :passed="passed"></echarts-gauge-vue>
                 </n-gi>
                 <n-gi :span="3" class="anim-up-delay" style="transform: translateY(100%);">
                     <n-table style="text-align: center;" striped>
