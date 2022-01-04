@@ -15,7 +15,7 @@
         <n-gi :span="3">
           <n-input-group>
             <n-input-group-label style="width: 90%">用例编号</n-input-group-label>
-            <n-input-number v-model:value="EcaseID" ref="caseIDRef"></n-input-number>
+            <n-input-number v-model:value="EcaseID" :disabled="IDStatus" ref="caseIDRef" @click="changeIDStu"></n-input-number>
           </n-input-group>
         </n-gi>
         <n-gi :span="6">
@@ -131,6 +131,12 @@ watch((EcaseType), () => {
   locatAble.value = EcaseType.value === 'open'
   locatValAble.value = EcaseType.value === 'open'
 })
+//定义用例编号是否能输入，为false为可以输入
+const IDStatus = ref(true)
+const changeIDStu = ()=>{
+  alert('编号自动增加，点击开启编辑模式，不受保护，输入相同编号可替换原来编号的用例！')
+  IDStatus.value = false
+}
 //定义select选择器的值
 const option = [
   {
