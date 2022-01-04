@@ -13,8 +13,8 @@
     <div class="gridFather">
       <n-grid x-gap="12" cols="16" class="anim-left Giboard">
         <n-gi :span="3">
-          <n-input-group @click="changeIDStu">
-            <n-input-group-label style="width: 90%">
+          <n-input-group>
+            <n-input-group-label style="width: 90%" @click="changeIDStu">
               用例编号
               <Icon size="20">
                 <CursorClick20Filled/>
@@ -57,10 +57,10 @@
       <tr class="tableTitle">
         <td>
           <n-button @click="sortValue= !sortValue">
-          用例编号
-          <Icon size="15">
-            <ArrowSort16Filled/>
-          </Icon>
+            用例编号
+            <Icon size="15">
+              <ArrowSort16Filled/>
+            </Icon>
           </n-button>
         </td>
         <td>操作类型</td>
@@ -80,8 +80,8 @@
         <td>{{ item[4] }}</td>
         <td>{{ item[5] }}</td>
         <td>
-<!--          <n-button type="primary"  size="small" @click="editCase(item)">编辑</n-button>-->
-          <n-button type="error"  size="small" @click="delCase(item)">
+          <!--          <n-button type="primary"  size="small" @click="editCase(item)">编辑</n-button>-->
+          <n-button type="error" size="small" @click="delCase(item)">
             <Icon size="20">
               <Delete/>
             </Icon>
@@ -107,13 +107,14 @@ import {
   NButton,
   NDivider,
   NTable,
-  NAlert
+  NAlert,
+  useMessage
 } from 'naive-ui'
 import {ref, watch, watchEffect,} from "vue";
 import {SadCryRegular} from '@vicons/fa'
-import {Add,Delete} from '@vicons/carbon'
+import {Add, Delete} from '@vicons/carbon'
 import {Icon} from '@vicons/utils'
-import {ArrowSort16Filled,CursorClick20Filled} from '@vicons/fluent'
+import {ArrowSort16Filled, CursorClick20Filled} from '@vicons/fluent'
 //定义用例的输入数据
 const EcaseID = ref(1)
 const EcaseType = ref(null)
@@ -137,10 +138,19 @@ watch((EcaseType), () => {
   locatValAble.value = EcaseType.value === 'open'
 })
 //定义用例编号是否能输入，为false为可以输入
+const message = useMessage()
 const IDStatus = ref(true)
-const changeIDStu = ()=>{
-  alert('编号自动增加，点击开启编辑模式，不受保护，输入相同编号可替换原来编号的用例！')
-  IDStatus.value = false
+const changeIDStu = () => {
+  if (IDStatus.value) {
+    message.warning('关闭用例保护，用例编号仍自动递增，输入相同编号用例可替换原有用例，再次点击开启保护,第一条不允许修改！', {
+      closable: true,
+      duration: 5000,
+    })
+    IDStatus.value = false
+  } else {
+    message.info('已开启用例保护！')
+    IDStatus.value = true
+  }
 }
 //定义select选择器的值
 const option = [
@@ -210,12 +220,9 @@ const addCase = () => {
     alertShow.value = true
   } else {
     const tablelist = [caseIDRef.value.value, caseTypeRef.value.value, caseLocaRef.value.value, caseTypeValRef.value.value, caseDataRef.value.value, caseModelRef.value.value]
-    if (arr(caseIDRef.value.value)){
-      tableValue.value.splice(arr(caseIDRef.value.value),1,tablelist)
-      console.log(tableValue.value)
-    }
-    else {
-      console.log(arr(caseIDRef.value.value))
+    if (arr(caseIDRef.value.value)) {
+      tableValue.value.splice(arr(caseIDRef.value.value), 1, tablelist)
+    } else {
       tableValue.value.push(tablelist)
     }
     EcaseType.value = null
@@ -237,27 +244,28 @@ watchEffect(() => {
   tableShow.value = a.length > 0
   if (sortValue.value) {
     tableValue.value = tableValue.value.sort().reverse()
-  }else {
+  } else {
     tableValue.value = tableValue.value.sort()
   }
 })
 
 //表格删除按钮事件，实际删除的是列表内容
 //获取点击对应的列表值，拿到列表index，根据index删除
-const delCase = (item)=>{
+const delCase = (item) => {
   const index_item = tableValue.value.indexOf(item)
-  tableValue.value.splice(index_item,1)
+  tableValue.value.splice(index_item, 1)
   // console.log('@@@@@',index_item)
 }
 
-//定义编辑按钮点击事件
-function arr(itemID){
-  for (let i=0;i<tableValue.value.length;i++){
-    if (tableValue.value[i][0] === itemID){
+//定义修改替换事件
+function arr(itemID) {
+  for (let i = 0; i < tableValue.value.length; i++) {
+    if (tableValue.value[i][0] === itemID) {
       return tableValue.value.indexOf(tableValue.value[i])
     }
   }
 }
+
 // const editCase = (item)=>{
 //   console.log('当前ID',item[0])
 //   console.log(arr(item[0]))
