@@ -15,7 +15,7 @@
         <n-gi :span="3">
           <n-input-group>
             <n-input-group-label style="width: 90%">用例编号</n-input-group-label>
-            <n-input-number v-model:value="EcaseID" disabled ref="caseIDRef"></n-input-number>
+            <n-input-number v-model:value="EcaseID" ref="caseIDRef"></n-input-number>
           </n-input-group>
         </n-gi>
         <n-gi :span="6">
@@ -50,7 +50,14 @@
     <n-table striped bordered v-show="tableShow" class="anim-left caseTable">
       <thead>
       <tr class="tableTitle">
-        <td>用例编号</td>
+        <td>
+          <n-button @click="sortValue= !sortValue">
+          用例编号
+          <Icon size="15">
+            <ArrowSort16Filled/>
+          </Icon>
+          </n-button>
+        </td>
         <td>操作类型</td>
         <td>定位方式</td>
         <td>定位值</td>
@@ -68,7 +75,7 @@
         <td>{{ item[4] }}</td>
         <td>{{ item[5] }}</td>
         <td>
-          <n-button type="primary"  size="small" @click="editCase(item)">编辑</n-button>
+<!--          <n-button type="primary"  size="small" @click="editCase(item)">编辑</n-button>-->
           <n-button type="error"  size="small" @click="delCase(item)">
             <Icon size="20">
               <Delete/>
@@ -97,10 +104,11 @@ import {
   NTable,
   NAlert
 } from 'naive-ui'
-import {ref, watch, watchEffect} from "vue";
+import {ref, watch, watchEffect,} from "vue";
 import {SadCryRegular} from '@vicons/fa'
 import {Add,Delete} from '@vicons/carbon'
 import {Icon} from '@vicons/utils'
+import {ArrowSort16Filled} from '@vicons/fluent'
 //定义用例的输入数据
 const EcaseID = ref(1)
 const EcaseType = ref(null)
@@ -191,7 +199,14 @@ const addCase = () => {
     alertShow.value = true
   } else {
     const tablelist = [caseIDRef.value.value, caseTypeRef.value.value, caseLocaRef.value.value, caseTypeValRef.value.value, caseDataRef.value.value, caseModelRef.value.value]
-    tableValue.value.push(tablelist)
+    if (arr(caseIDRef.value.value)){
+      tableValue.value.splice(arr(caseIDRef.value.value),1,tablelist)
+      console.log(tableValue.value)
+    }
+    else {
+      console.log(arr(caseIDRef.value.value))
+      tableValue.value.push(tablelist)
+    }
     EcaseType.value = null
     EcaseTypeValue.value = null
     locationType.value = null
@@ -202,10 +217,18 @@ const addCase = () => {
 }
 
 //当没有数据时不显示表格
+//监听列表，当sortValue为true则是倒序排列
+const sortValue = ref(false)
 const tableShow = ref(false)
 watchEffect(() => {
+  console.log(sortValue.value)
   const a = tableValue.value
   tableShow.value = a.length > 0
+  if (sortValue.value) {
+    tableValue.value = tableValue.value.sort().reverse()
+  }else {
+    tableValue.value = tableValue.value.sort()
+  }
 })
 
 //表格删除按钮事件，实际删除的是列表内容
@@ -224,10 +247,10 @@ function arr(itemID){
     }
   }
 }
-const editCase = (item)=>{
-  console.log('当前ID',item[0])
-  console.log(arr(item[0]))
-}
+// const editCase = (item)=>{
+//   console.log('当前ID',item[0])
+//   console.log(arr(item[0]))
+// }
 </script>
 
 <style scoped>
