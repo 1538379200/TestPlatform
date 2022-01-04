@@ -19,7 +19,7 @@ const passed = ref(0.6)
             <router-view style="text-align: center;"></router-view>
             <n-grid x-gap="12" :cols="5">
                 <n-gi :span="2">
-                  <echarts-pie :passcase="passcase" :failcase="failcase"></echarts-pie>>
+                  <echarts-pie :passcase="passcase" :failcase="failcase"></echarts-pie>
                     <echarts-gauge-vue :passed="passed"></echarts-gauge-vue>
                 </n-gi>
                 <n-gi :span="3" class="anim-up-delay" style="transform: translateY(100%);">
