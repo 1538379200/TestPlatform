@@ -13,9 +13,14 @@
     <div class="gridFather">
       <n-grid x-gap="12" cols="16" class="anim-left Giboard">
         <n-gi :span="3">
-          <n-input-group>
-            <n-input-group-label style="width: 90%">用例编号</n-input-group-label>
-            <n-input-number v-model:value="EcaseID" :disabled="IDStatus" ref="caseIDRef" @click="changeIDStu"></n-input-number>
+          <n-input-group @click="changeIDStu">
+            <n-input-group-label style="width: 90%">
+              用例编号
+              <Icon size="20">
+                <CursorClick20Filled/>
+              </Icon>
+            </n-input-group-label>
+            <n-input-number v-model:value="EcaseID" :disabled="IDStatus" ref="caseIDRef"></n-input-number>
           </n-input-group>
         </n-gi>
         <n-gi :span="6">
@@ -108,7 +113,7 @@ import {ref, watch, watchEffect,} from "vue";
 import {SadCryRegular} from '@vicons/fa'
 import {Add,Delete} from '@vicons/carbon'
 import {Icon} from '@vicons/utils'
-import {ArrowSort16Filled} from '@vicons/fluent'
+import {ArrowSort16Filled,CursorClick20Filled} from '@vicons/fluent'
 //定义用例的输入数据
 const EcaseID = ref(1)
 const EcaseType = ref(null)
