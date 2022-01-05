@@ -16,7 +16,7 @@ const homepage = [
                 path: '/'
               }
             },
-            {default: () => '自动化测试平台'}
+            {default: () => '自己不测试给别人测试平台'}
         ),
     key: 'home'
   },
