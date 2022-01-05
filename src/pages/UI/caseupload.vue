@@ -14,9 +14,9 @@ import {NUpload,NUploadDragger,NIcon,NText,NP} from 'naive-ui'
                 </Icon>
                 </n-icon>
             </div>
-            <n-text style="font-size: 16px;">点击或者拖动用例文件到该区域来上传</n-text>
+            <n-text style="font-size: 16px;">点击或者拖动用例文件来该区域上香</n-text>
             <n-p depth="3" style="margin: 8px 0 0 0;">
-                请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码
+                请尽量上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码
             </n-p>
             </n-upload-dragger>
         </n-upload>

@@ -13,6 +13,12 @@ import top from './components/top.vue'
 import {Accessibility16Filled} from '@vicons/fluent'
 import {Icon} from '@vicons/utils'
 import {computed, ref} from 'vue'
+import {useStore} from 'vuex'
+const $store = useStore()
+const keepList = computed(()=>{
+  return $store.state.keepaliveList;
+})
+console.log(keepList.value)
 </script>
 
 
@@ -26,7 +32,11 @@ import {computed, ref} from 'vue'
       <n-scrollbar>
         <n-message-provider>
           <n-layout-content content-style="padding: 24px;">
-            <router-view></router-view>
+              <router-view v-slot="{Component}">
+                <keep-alive :include="keepList">
+                  <component :is="Component"></component>
+                </keep-alive>
+              </router-view>
           </n-layout-content>
         </n-message-provider>
       </n-scrollbar>
@@ -73,7 +83,7 @@ body,
 }
 
 .n-layout-header {
-  padding: 10px 10px 0px 10px;
+  padding: 10px 10px 0 10px;
   background-color: rgba(255, 255, 255, 0.466);
   box-shadow: 0 0 5px 0 gray;
 }

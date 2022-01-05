@@ -40,18 +40,24 @@
         <n-gi :span="2">
           <n-input placeholder="可以输入功能模块" v-model:value="EcaseModel" clearable ref="caseModelRef"></n-input>
         </n-gi>
-        <n-gi :span="1">
+        <n-gi :span="2">
           <n-button type="primary" @click="addCase">
             <Icon size="20">
               <Add/>
             </Icon>
-            确认添加用例
+            添加用例
+          </n-button>
+          <n-button type="info" style="margin-left: 8px" @click="startTest">
+            <Icon size="20">
+              <HourglassStart/>
+            </Icon>
+            开始测试
           </n-button>
         </n-gi>
       </n-grid>
       <n-divider class="dividerStyle"></n-divider>
     </div>
-    <div style="height: 3rem"></div>
+<!--    <div style="height: 3rem"></div>-->
     <n-table striped bordered v-show="tableShow" class="anim-left caseTable">
       <thead>
       <tr class="tableTitle">
@@ -108,13 +114,14 @@ import {
   NDivider,
   NTable,
   NAlert,
-  useMessage
+  useMessage,
 } from 'naive-ui'
 import {ref, watch, watchEffect,} from "vue";
-import {SadCryRegular} from '@vicons/fa'
+import {SadCryRegular,HourglassStart} from '@vicons/fa'
 import {Add, Delete} from '@vicons/carbon'
 import {Icon} from '@vicons/utils'
 import {ArrowSort16Filled, CursorClick20Filled} from '@vicons/fluent'
+import {useStore} from 'vuex'
 //定义用例的输入数据
 const EcaseID = ref(1)
 const EcaseType = ref(null)
@@ -142,13 +149,13 @@ const message = useMessage()
 const IDStatus = ref(true)
 const changeIDStu = () => {
   if (IDStatus.value) {
-    message.warning('关闭用例保护，用例编号仍自动递增，输入相同编号用例可替换原有用例，再次点击开启保护,第一条不允许修改！', {
+    message.warning('开启渣男/女模式！用例编号仍自动递增，输入相同编号用例可替换原有女/男朋友，再次点击关闭', {
       closable: true,
       duration: 5000,
     })
     IDStatus.value = false
   } else {
-    message.info('已开启用例保护！')
+    message.info('你还挺有良心，关闭渣男/女模式')
     IDStatus.value = true
   }
 }
@@ -220,9 +227,12 @@ const addCase = () => {
     alertShow.value = true
   } else {
     const tablelist = [caseIDRef.value.value, caseTypeRef.value.value, caseLocaRef.value.value, caseTypeValRef.value.value, caseDataRef.value.value, caseModelRef.value.value]
-    if (arr(caseIDRef.value.value)) {
+    if (arr(caseIDRef.value.value)>=0) {
+      console.log(arr(caseIDRef.value.value))
       tableValue.value.splice(arr(caseIDRef.value.value), 1, tablelist)
+      message.warning('你把编号为'+caseIDRef.value.value+'的用例替换了，不爱就下手这么狠吗')
     } else {
+      console.log(arr(caseIDRef.value.value))
       tableValue.value.push(tablelist)
     }
     EcaseType.value = null
@@ -239,13 +249,19 @@ const addCase = () => {
 const sortValue = ref(false)
 const tableShow = ref(false)
 watchEffect(() => {
-  console.log(sortValue.value)
   const a = tableValue.value
+  if (a.length===0){
+    EcaseID.value = 1
+  }
   tableShow.value = a.length > 0
   if (sortValue.value) {
-    tableValue.value = tableValue.value.sort().reverse()
+    tableValue.value = tableValue.value.sort((a,b)=>{
+      return b[0]-a[0]
+    })
   } else {
-    tableValue.value = tableValue.value.sort()
+    tableValue.value = tableValue.value.sort((a,b)=>{
+      return a[0]-b[0]
+    })
   }
 })
 
@@ -254,6 +270,7 @@ watchEffect(() => {
 const delCase = (item) => {
   const index_item = tableValue.value.indexOf(item)
   tableValue.value.splice(index_item, 1)
+  message.success('你抛弃了编号为'+`${item[0]}`+'的数据，你们当初只是玩玩吗？')
   // console.log('@@@@@',index_item)
 }
 
@@ -261,17 +278,29 @@ const delCase = (item) => {
 function arr(itemID) {
   for (let i = 0; i < tableValue.value.length; i++) {
     if (tableValue.value[i][0] === itemID) {
-      return tableValue.value.indexOf(tableValue.value[i])
+      return  tableValue.value.indexOf(tableValue.value[i])
     }
   }
 }
 
-// const editCase = (item)=>{
-//   console.log('当前ID',item[0])
-//   console.log(arr(item[0]))
-// }
+
+const $store = useStore()
+//设置vuex中管理的缓存组件列表，如果没有，添加此组件名,进行缓存
+if ($store.state.keepaliveList.indexOf('caseEdit') === -1){
+  $store.commit('pushkeepaliveList','caseEdit')
+}
+//定义点击开始测试按钮事件
+//点击开始测试，去除组件缓存
+const startTest = ()=>{
+  $store.commit('removekeepaliveList','caseEdit')
+}
 </script>
 
+<script>
+export default {
+  name:'caseEdit',
+}
+</script>
 <style scoped>
 @import "../../static/animation.css";
 
