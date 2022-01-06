@@ -11,7 +11,7 @@
   </transition>
   <n-space inline>
     <div class="gridFather">
-      <n-grid x-gap="12" cols="16" class="anim-left Giboard">
+      <n-grid x-gap="12" cols="m:16 l:16 xl:17" class="anim-left Giboard" responsive="screen" item-responsive>
         <n-gi :span="3">
           <n-input-group>
             <n-input-group-label style="width: 90%" @click="changeIDStu">
@@ -40,7 +40,7 @@
         <n-gi :span="2">
           <n-input placeholder="可以输入功能模块" v-model:value="EcaseModel" clearable ref="caseModelRef"></n-input>
         </n-gi>
-        <n-gi :span="2">
+        <n-grid-item span="xl:2 l:3 xl:3">
           <n-button type="primary" @click="addCase">
             <Icon size="20">
               <Add/>
@@ -53,7 +53,7 @@
             </Icon>
             开始测试
           </n-button>
-        </n-gi>
+        </n-grid-item>
       </n-grid>
       <n-divider class="dividerStyle"></n-divider>
     </div>
@@ -114,6 +114,7 @@ import {
   NDivider,
   NTable,
   NAlert,
+    NGridItem,
   useMessage,
 } from 'naive-ui'
 import {ref, watch, watchEffect,} from "vue";
