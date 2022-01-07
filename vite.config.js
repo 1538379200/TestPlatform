@@ -12,4 +12,9 @@ export default defineConfig({
       symbolId:'icon-[dir]-[name]',
     })
   ],
+  server:{
+    host:'0.0.0.0',
+    port:3000,
+    https:false
+  }
 })

@@ -164,6 +164,7 @@
     <n-text>
       概要描述缺陷
     </n-text>
+    <SvgIcons name="bug" style="float: right;width: 40rem;height: 40rem"></SvgIcons>
     <n-h3>发现人：</n-h3>
     <n-text>
       一般是缺陷管理系统自动获取当前用户
@@ -180,7 +181,6 @@
     <n-text>
       软件的bug属于哪个功能模块
     </n-text>
-    <SvgIcons name="bug" style="float: right;width: 40rem;height: 40rem"></SvgIcons>
     <n-h3>是否可重现：</n-h3>
     <n-text>
       这个可以不写

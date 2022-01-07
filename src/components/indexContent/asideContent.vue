@@ -17,6 +17,13 @@
         <n-button @click="scrollP('#扩展指标')" block round strong type="primary" secondary class="btnStyle">可扩展指标</n-button>
         <n-button @click="scrollP('#可靠性指标')" block round strong type="primary" secondary class="btnStyle">可靠性指标</n-button>
       </n-collapse-item>
+      <n-collapse-item title="接口测试相关" name="3">
+        <n-button @click="scrollP('#接口分类')" block round strong type="primary" secondary class="btnStyle">常见接口分类</n-button>
+        <n-button @click="scrollP('#接口介绍')" block round strong type="primary" secondary class="btnStyle">什么是接口测试</n-button>
+        <n-button @click="scrollP('#getpost')" block round strong type="primary" secondary class="btnStyle">GET和POST的区别</n-button>
+        <n-button @click="scrollP('#为什么做')" block round strong type="primary" secondary class="btnStyle">为什么要做接口测试</n-button>
+        <n-button @click="scrollP('#如何做')" block round strong type="primary" secondary class="btnStyle">如何进行接口测试</n-button>
+      </n-collapse-item>
     </n-collapse>
 </template>
 
@@ -33,5 +40,10 @@ const scrollP = (el)=>{
 <style scoped>
 :deep(.btnStyle){
   margin: 3px 0 3px 0 ;
+}
+
+:deep(.n-button:hover){
+  transform: scale(1.1);
+  transition-duration: 150ms;
 }
 </style>

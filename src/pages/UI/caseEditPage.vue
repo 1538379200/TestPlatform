@@ -56,47 +56,49 @@
         </n-grid-item>
       </n-grid>
       <n-divider class="dividerStyle"></n-divider>
+      <n-table striped bordered v-show="tableShow" class="anim-left caseTable">
+        <thead>
+        <tr class="tableTitle">
+          <td>
+            <n-button @click="sortValue= !sortValue">
+              用例编号
+              <Icon size="15">
+                <ArrowSort16Filled/>
+              </Icon>
+            </n-button>
+          </td>
+          <td>操作类型</td>
+          <td>定位方式</td>
+          <td>定位值</td>
+          <td>输入数据</td>
+          <td>测试模块</td>
+          <td>
+            操作
+            <n-button type="warning" size="small" @click="clearTable">清空</n-button>
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in tableValue" class="anim-left" :key="item[0]">
+          <td>{{ item[0] }}</td>
+          <td>{{ item[1] }}</td>
+          <td>{{ item[2] }}</td>
+          <td>{{ item[3] }}</td>
+          <td>{{ item[4] }}</td>
+          <td>{{ item[5] }}</td>
+          <td>
+            <!--          <n-button type="primary"  size="small" @click="editCase(item)">编辑</n-button>-->
+            <n-button type="error" size="small" @click="delCase(item)">
+              <Icon size="20">
+                <Delete/>
+              </Icon>
+              删除
+            </n-button>
+          </td>
+        </tr>
+        </tbody>
+      </n-table>
     </div>
-<!--    <div style="height: 3rem"></div>-->
-    <n-table striped bordered v-show="tableShow" class="anim-left caseTable">
-      <thead>
-      <tr class="tableTitle">
-        <td>
-          <n-button @click="sortValue= !sortValue">
-            用例编号
-            <Icon size="15">
-              <ArrowSort16Filled/>
-            </Icon>
-          </n-button>
-        </td>
-        <td>操作类型</td>
-        <td>定位方式</td>
-        <td>定位值</td>
-        <td>输入数据</td>
-        <td>测试模块</td>
-        <td>操作</td>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="item in tableValue" class="anim-left" :key="item[0]">
-        <td>{{ item[0] }}</td>
-        <td>{{ item[1] }}</td>
-        <td>{{ item[2] }}</td>
-        <td>{{ item[3] }}</td>
-        <td>{{ item[4] }}</td>
-        <td>{{ item[5] }}</td>
-        <td>
-          <!--          <n-button type="primary"  size="small" @click="editCase(item)">编辑</n-button>-->
-          <n-button type="error" size="small" @click="delCase(item)">
-            <Icon size="20">
-              <Delete/>
-            </Icon>
-            删除
-          </n-button>
-        </td>
-      </tr>
-      </tbody>
-    </n-table>
   </n-space>
 </template>
 
@@ -114,11 +116,11 @@ import {
   NDivider,
   NTable,
   NAlert,
-    NGridItem,
+  NGridItem,
   useMessage,
 } from 'naive-ui'
 import {ref, watch, watchEffect,} from "vue";
-import {SadCryRegular,HourglassStart} from '@vicons/fa'
+import {SadCryRegular, HourglassStart} from '@vicons/fa'
 import {Add, Delete} from '@vicons/carbon'
 import {Icon} from '@vicons/utils'
 import {ArrowSort16Filled, CursorClick20Filled} from '@vicons/fluent'
@@ -228,12 +230,10 @@ const addCase = () => {
     alertShow.value = true
   } else {
     const tablelist = [caseIDRef.value.value, caseTypeRef.value.value, caseLocaRef.value.value, caseTypeValRef.value.value, caseDataRef.value.value, caseModelRef.value.value]
-    if (arr(caseIDRef.value.value)>=0) {
-      console.log(arr(caseIDRef.value.value))
+    if (arr(caseIDRef.value.value) >= 0) {
       tableValue.value.splice(arr(caseIDRef.value.value), 1, tablelist)
-      message.warning('你把编号为'+caseIDRef.value.value+'的用例替换了，不爱就下手这么狠吗')
+      message.warning('你把编号为' + caseIDRef.value.value + '的用例替换了，不爱就下手这么狠吗')
     } else {
-      console.log(arr(caseIDRef.value.value))
       tableValue.value.push(tablelist)
     }
     EcaseType.value = null
@@ -251,17 +251,17 @@ const sortValue = ref(false)
 const tableShow = ref(false)
 watchEffect(() => {
   const a = tableValue.value
-  if (a.length===0){
+  if (a.length === 0) {
     EcaseID.value = 1
   }
   tableShow.value = a.length > 0
   if (sortValue.value) {
-    tableValue.value = tableValue.value.sort((a,b)=>{
-      return b[0]-a[0]
+    tableValue.value = tableValue.value.sort((a, b) => {
+      return b[0] - a[0]
     })
   } else {
-    tableValue.value = tableValue.value.sort((a,b)=>{
-      return a[0]-b[0]
+    tableValue.value = tableValue.value.sort((a, b) => {
+      return a[0] - b[0]
     })
   }
 })
@@ -271,35 +271,32 @@ watchEffect(() => {
 const delCase = (item) => {
   const index_item = tableValue.value.indexOf(item)
   tableValue.value.splice(index_item, 1)
-  message.success('你抛弃了编号为'+`${item[0]}`+'的数据，你们当初只是玩玩吗？')
-  // console.log('@@@@@',index_item)
+  message.success('你抛弃了编号为' + `${item[0]}` + '的数据，你们当初只是玩玩吗？')
 }
 
 //定义修改替换事件
 function arr(itemID) {
   for (let i = 0; i < tableValue.value.length; i++) {
     if (tableValue.value[i][0] === itemID) {
-      return  tableValue.value.indexOf(tableValue.value[i])
+      return tableValue.value.indexOf(tableValue.value[i])
     }
   }
 }
 
 
 const $store = useStore()
-//设置vuex中管理的缓存组件列表，如果没有，添加此组件名,进行缓存
-if ($store.state.keepaliveList.indexOf('caseEdit') === -1){
-  $store.commit('pushkeepaliveList','caseEdit')
-}
 //定义点击开始测试按钮事件
-//点击开始测试，去除组件缓存
-const startTest = ()=>{
-  $store.commit('removekeepaliveList','caseEdit')
+const startTest = () => {
+
+}
+const clearTable = ()=>{
+  tableValue.value = []
 }
 </script>
 
 <script>
 export default {
-  name:'caseEdit',
+  name: 'caseEdit',
 }
 </script>
 <style scoped>
