@@ -16,6 +16,6 @@ export default createStore({
         }
     },
     state:{
-        keepaliveList:[]
+        keepaliveList:['caseEdit']
     },
 })
