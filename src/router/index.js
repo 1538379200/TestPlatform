@@ -42,6 +42,11 @@ const routes = [
         path:'/caseEdit',
         component:caseEdit,
     },
+    {
+        name:'mycases',
+        path:'/mycases',
+        component:()=>import('../pages/UI/MyTestCase.vue')
+    },
 ]
 
 const router = createRouter({

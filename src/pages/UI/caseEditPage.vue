@@ -125,6 +125,7 @@ import {Add, Delete} from '@vicons/carbon'
 import {Icon} from '@vicons/utils'
 import {ArrowSort16Filled, CursorClick20Filled} from '@vicons/fluent'
 import {useStore} from 'vuex'
+import {onBeforeRouteLeave} from 'vue-router'
 //定义用例的输入数据
 const EcaseID = ref(1)
 const EcaseType = ref(null)
@@ -287,8 +288,14 @@ function arr(itemID) {
 const $store = useStore()
 //定义点击开始测试按钮事件
 const startTest = () => {
-
+  $store.commit('removekeepaliveList','caseEdit')
+  console.log($store.state.keepaliveList)
 }
+onBeforeRouteLeave((to,from,next)=>{
+  $store.state.keepaliveList.push('caseEdit')
+  console.log($store.state.keepaliveList)
+  next()
+})
 const clearTable = ()=>{
   tableValue.value = []
 }

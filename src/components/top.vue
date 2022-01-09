@@ -53,24 +53,6 @@ const posttest = [
   },
 ]
 
-const personal = [
-  {
-    label: '个人中心',
-    key: 'personal',
-    children: [
-      {
-        label: '我的用例',
-        key: 'mycase',
-
-      },
-      {
-        label: '退出登录',
-        key: 'logout',
-      }
-    ]
-  },
-]
-
 const activeKey = ref(null)
 
 const defaultExpandedKeys = ['personal']
@@ -81,9 +63,22 @@ const handleClick = () => {
 }
 
 const options = [
+  // {
+  //   label: '我的用例',
+  //   key: 'mycase',
+  // },
   {
-    label: '我的用例',
-    key: 'mycase',
+    label: () =>
+        h(
+            RouterLink,
+            {
+              to: {
+                name: 'mycases'
+              }
+            },
+            {default: () => '我的用例'}
+        ),
+    key: 'mytestcase'
   },
   {
     label: '我的报告',

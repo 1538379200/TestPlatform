@@ -18,7 +18,7 @@ const $store = useStore()
 const keepList = computed(()=>{
   return $store.state.keepaliveList;
 })
-console.log(keepList.value)
+console.log($store.state.keepaliveList)
 </script>
 
 
