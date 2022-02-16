@@ -11,3 +11,13 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 - 相关生态：vuex、vue-router
 - 后端编程语言及框架：python-django
 
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+    linkStyle 0 stroke:#0ff,stroke-width:2px;
+    linkStyle 3 stroke:#ff3,stroke-width:4px;
+
+```
